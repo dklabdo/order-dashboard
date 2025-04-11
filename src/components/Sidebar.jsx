@@ -1,9 +1,12 @@
-export default function Sidebar({ activeNav, setActiveNav, sidebarOpen, toggleSidebar }) {
+import { useState } from "react";
+import { href, Link, useLocation, useParams } from "react-router-dom";
+
+export default function Sidebar({ activeNav,  sidebarOpen, toggleSidebar }) {
   return (
     <>
       {/* Sidebar - Collapsible */}
       <div
-        className={`${sidebarOpen ? 'w-60' : 'w-0'} text-white flex flex-col rounded-tr-3xl rounded-br-3xl transition-all duration-300 relative overflow-hidden`}
+        className={`${sidebarOpen ? 'w-72' : 'w-0'} text-white flex flex-col rounded-tr-3xl rounded-br-3xl transition-all duration-300 relative overflow-hidden`}
         style={{ backgroundColor: '#200E32' }}
       >
         <div className="bg-[#200E32] p-6 rounded-lg flex items-center justify-center">
@@ -15,43 +18,43 @@ export default function Sidebar({ activeNav, setActiveNav, sidebarOpen, toggleSi
             icon="user" 
             text="Compte" 
             active={activeNav === 'Compte'} 
-            onClick={() => setActiveNav('Compte')} 
+            path="/"
           />
           <NavItem 
             icon="clipboard" 
             text="Commandes" 
             active={activeNav === 'Commandes'} 
-            onClick={() => setActiveNav('Commandes')} 
+            path="/commandes"
           />
           <NavItem 
             icon="menu" 
             text="Menu" 
-            active={activeNav === 'Menu'} 
-            onClick={() => setActiveNav('Menu')} 
+            active={activeNav === 'Menu'}
+            path="/menu" 
           />
           <NavItem 
             icon="package" 
-            text="Stock" 
+            text="Stock"
+            path="/stock" 
             active={activeNav === 'Stock'} 
-            onClick={() => setActiveNav('Stock')} 
           />
           <NavItem 
             icon="bar-chart" 
             text="Statestique" 
+            path="/statestique"
             active={activeNav === 'Statestique'} 
-            onClick={() => setActiveNav('Statestique')} 
           />
           <NavItem 
             icon="credit-card" 
             text="Finance" 
+            path="/finance"
             active={activeNav === 'Finance'} 
-            onClick={() => setActiveNav('Finance')} 
           />
           <NavItem 
             icon="clock" 
             text="Historique" 
+            path="/historique"
             active={activeNav === 'Historique'} 
-            onClick={() => setActiveNav('Historique')} 
           />
         </div>
       </div>
@@ -59,22 +62,18 @@ export default function Sidebar({ activeNav, setActiveNav, sidebarOpen, toggleSi
       {/* Toggle sidebar button */}
       <div
         className={`absolute top-1/2 -translate-y-1/2 transition-all duration-300 z-10 ${
-          sidebarOpen ? 'left-60 -translate-x-1/2' : '-left-3'
+          sidebarOpen ? 'left-72 -translate-x-1/2' : '-left-3'
         }`}
       >        
         <button 
           onClick={toggleSidebar}
           className="bg-white hover:bg-red-400 text-red-500 rounded-full p-2"
         >
-          {sidebarOpen ? (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          
+            <svg className={`w-6 transition-all h-6 ${sidebarOpen ? "rotate-0" : "rotate-180"} `} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
             </svg>
-          ) : (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
-            </svg>
-          )}
+          
         </button>
       </div>
     </>
@@ -82,11 +81,17 @@ export default function Sidebar({ activeNav, setActiveNav, sidebarOpen, toggleSi
 }
 
 // Navigation Item Component with onClick handler
-function NavItem({ icon, text, active, onClick }) {
+function NavItem({ icon, text, active, path }) {
+  console.log(location.pathname);
+  console.log(path);
+
+  const loc = useLocation(); // Get the current location from the router
+  console.log(loc.pathname);
+  
   return (
-    <div 
-      className={`flex items-center space-x-3 p-2 rounded-full cursor-pointer ${active ? 'bg-red-500' : 'hover:bg-purple-900'}`}
-      onClick={onClick}
+    <Link 
+      to={path}
+      className={`flex w-[80%] items-center space-x-3 px-3 py-3 transition-all rounded-full cursor-pointer ${loc.pathname === path ? 'bg-red-500 translate-x-3 ' : 'hover:bg-red-500 hover:translate-x-3'}`}
     >
       <div className="w-5 h-5 flex items-center justify-center">
         {icon === 'user' && <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>}
@@ -98,6 +103,6 @@ function NavItem({ icon, text, active, onClick }) {
         {icon === 'clock' && <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>}
       </div>
       <span className="text-sm">{text}</span>
-    </div>
+    </Link>
   );
 }
