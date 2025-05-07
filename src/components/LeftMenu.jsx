@@ -1,6 +1,21 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 
-export default function LeftMenu({ activeItem, onMenuChange }) {
+export default function LeftMenu({ activeItem, onMenuChange, isOpen, setIsOpen }) {
+  useEffect(() => {
+    if (isOpen && window.innerWidth < 1024) {
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+
+    return () => {
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [isOpen]);
+
   const menuItems = [
     { id: 'table', name: 'Table management', icon: TableIcon },
     { id: 'employee', name: 'Employee management', icon: EmployeeIcon },
@@ -12,28 +27,48 @@ export default function LeftMenu({ activeItem, onMenuChange }) {
   ];
 
   return (
-    <div className="w-64 bg-white flex flex-col gap-4 p-6">
-      {menuItems.map(item => (
-        <div
-          key={item.id}
-          className={`flex items-center gap-2 p-4 rounded-lg relative cursor-pointer transition-colors duration-200
-            ${activeItem === item.id
-              ? 'bg-red-100 text-red-500' // Active menu item styles
-              : 'text-gray-700 hover:bg-gray-100'}`} // Inactive menu item styles
-          onClick={() => onMenuChange(item.id)} // Change active item when clicked
-        >
-          <div className="w-5 h-5 flex items-center justify-center">
-            <item.icon />
-          </div>
-          <span className="text-sm font-medium">{item.name}</span>
+    <>
+      <div className={`
+        fixed lg:static 
+        inset-y-0 left-0 
+        transform ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+        lg:translate-x-0 
+        transition-transform duration-300 ease-in-out
+        w-16 lg:w-64 bg-white flex flex-col gap-4 p-3 lg:p-6
+        z-50 shadow-lg lg:shadow-none
+        h-screen overflow-y-auto
+      `}>
+        {menuItems.map(item => (
+          <div
+            key={item.id}
+            className={`flex items-center gap-2 p-4 rounded-lg relative cursor-pointer transition-colors duration-200
+              ${activeItem === item.id
+                ? 'bg-red-100 text-red-500'
+                : 'text-gray-700 hover:bg-gray-100'}`}
+            onClick={() => {
+              onMenuChange(item.id);
+              if (window.innerWidth < 1024) setIsOpen(false);
+            }}
+          >
+            <div className="w-5 h-5 flex items-center justify-center">
+              <item.icon />
+            </div>
+            <span className="hidden lg:inline text-sm font-medium">{item.name}</span>
 
-          {/* Vertical accent line on the right when active */}
-          {activeItem === item.id && (
-            <div className="absolute right-0 top-0 h-full w-1 bg-red-500 rounded-l"></div>
-          )}
-        </div>
-      ))}
-    </div>
+            {activeItem === item.id && (
+              <div className="absolute right-0 top-0 h-full w-1 bg-red-500 rounded-l"></div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {isOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 touch-none overflow-hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+    </>
   );
 }
 

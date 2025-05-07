@@ -1,12 +1,8 @@
 import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
-import MenuCard from './components/MenuCard';
-import AddMenuCard from './components/AddMenuCard';
-import MenuItemForm from './components/MenuItemForm';
-import LeftMenu from './components/LeftMenu';
 import EmployeeManagement from './components/EmployeeManagement';
 import Header from './components/Header';
-import TableManager from './components/TableManager'; // ✅ New import
+import TableManager from './components/TableManager';
 import { Route, Routes } from 'react-router-dom';
 import AccountPage from './Pages/AccountPage';
 import MenuPage from './Pages/MenuPage';
@@ -16,13 +12,12 @@ export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
-  
+  const [menuItems, setMenuItems] = useState([]); 
+
   const [user] = useState({
     name: 'Valentino',
     id: '4364514343',
   });
-
-  
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -56,35 +51,39 @@ export default function App() {
     setShowForm(false);
   };
 
-  
 
-  
-  // this useEffect is for reseting the form when switching between the views
-  // it will reset the form when the activeNav changes
   useEffect(() => {
     console.log('Switching views, resetting form...');
     setShowForm(false);
     setEditingItem(null);
   }, [activeNav]);
 
-  
   return (
-    <div className="flex h-screen ">
+    <div className="flex h-screen">
       <Sidebar
         activeNav={activeNav}
         sidebarOpen={sidebarOpen}
         toggleSidebar={toggleSidebar}
       />
 
-      <div className={`flex-1 flex flex-col overflow-hidden transition-all duration-300`}>
+      <div className="flex-1 flex flex-col overflow-hidden">
         <Header user={user} activeNav={activeNav} />
-        {
+        <div className="flex-1 overflow-y-auto">
           <Routes>
-            <Route  path="/" element={<AccountPage />} />
-            <Route  path="/menu" element={<MenuPage />} />
+            <Route path="/" element={<AccountPage />} />
+            <Route path="/menu" element={<MenuPage />} />
+            <Route
+              path="/employee-management"
+              element={<EmployeeManagement />}
+            />
+            <Route
+              path="/table-manager"
+              element={<TableManager />}
+            />
           </Routes>
-        }
+        </div>
       </div>
     </div>
-  );
+  ); 
 }
+

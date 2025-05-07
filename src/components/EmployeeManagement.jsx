@@ -38,9 +38,9 @@ export default function EmployeeManagement() {
   };
 
   return (
-    <div className="w-full">
-      <div className="flex justify-between items-center mb-6">
-        <div className="relative w-1/3">
+    <div className="w-full p-4 sm:p-6 lg:p-8"> {/* Added padding for different screen sizes */}
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6"> {/* Modified this line */}
+        <div className="relative w-full sm:w-64"> {/* Modified width */}
           <input
             type="text"
             className="w-full border border-gray-300 rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -56,25 +56,32 @@ export default function EmployeeManagement() {
         </div>
 
         <button
-          className="bg-red-500 hover:bg-red-600 text-white rounded-full px-4 py-2 flex items-center"
+          className="bg-red-500 hover:bg-red-600 text-white rounded-full px-4 py-2 flex items-center whitespace-nowrap" 
           onClick={() => setShowAddForm(true)}
         >
-          <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg className="w-5 h-5 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
           </svg>
           Ajouter un employée
         </button>
       </div>
 
-      <div className="bg-white rounded-lg ">
+      <div className="bg-white rounded-lg overflow-x-auto"> 
         <table className="min-w-full"> 
+          <thead>
+            <tr className="border-b">
+              <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Nom</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Poste</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Date d'embauche</th>
+            </tr>
+          </thead>
           <tbody className="bg-white">
             {filteredEmployees.length > 0 ? (
               filteredEmployees.map((employee) => (
-                <tr key={employee.id}>
-                  <td className="px-6 py-4 text-sm font-medium text-black">{employee.name}</td>
-                  <td className="px-6 py-4 text-sm text-black">{employee.role}</td>
-                  <td className="px-6 py-4 text-sm text-black">{employee.date}</td>
+                <tr key={employee.id} className="border-b">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">{employee.name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-black">{employee.role}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-black">{employee.date}</td>
                 </tr>
               ))
             ) : (
@@ -109,17 +116,17 @@ export default function EmployeeManagement() {
               required
             />
           </div>
-          <div className="mt-4 flex justify-end gap-4">
+          <div className="mt-4 flex flex-col sm:flex-row justify-end gap-4">
             <button
               type="button"
-              className="bg-gray-300 text-gray-800 rounded-md py-2 px-6"
+              className="bg-gray-300 text-gray-800 rounded-md py-2 px-6 w-full sm:w-auto" 
               onClick={() => setShowAddForm(false)}
             >
               Annuler
             </button>
             <button
               type="submit"
-              className="bg-red-500 text-white rounded-md py-2 px-6"
+              className="bg-red-500 text-white rounded-md py-2 px-6 w-full sm:w-auto" 
               disabled={!newEmployee.name || !newEmployee.role}
             >
               Ajouter
