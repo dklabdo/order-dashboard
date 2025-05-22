@@ -59,7 +59,7 @@ export default function App() {
   }, [activeNav]);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-dvh">
       <Sidebar
         activeNav={activeNav}
         sidebarOpen={sidebarOpen}

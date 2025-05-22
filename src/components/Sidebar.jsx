@@ -3,24 +3,24 @@ import { Link, useLocation } from "react-router-dom";
 
 export default function Sidebar({ activeNav, sidebarOpen, toggleSidebar }) {
   return (
-    <>
+    <div className={` ${sidebarOpen && "-space-x-5"} overflow-hidden flex h-dvh p-3  gap-1 `}>
       {/* Sidebar - Collapsible */}
       <div
         className={`${
-          sidebarOpen ? 'w-72' : 'w-0'
-        } text-white flex flex-col rounded-tr-3xl rounded-br-3xl transition-all duration-300 relative overflow-hidden
+          sidebarOpen ? 'w-64' : 'w-0'
+        } text-white flex flex-col rounded-3xl  transition-all duration-300  overflow-hidden
         fixed md:static h-full z-20`}
         style={{ backgroundColor: '#200E32' }}
       >
-        <div className="bg-[#200E32] p-6 rounded-lg flex items-center justify-center">
+        <div className="bg-[#200E32] p-4 rounded-lg flex items-center justify-center">
           <img
             src="/public/logo-removebg-preview.png"
-            className="w-32 h-auto"
+            className="w-28 h-auto"
             alt="Logo"
           />
         </div>
 
-        <div className="flex flex-col space-y-6 p-6">
+        <div className="flex scale-95 flex-col space-y-6 p-6">
           <NavItem
             icon="user"
             text="Compte"
@@ -65,16 +65,13 @@ export default function Sidebar({ activeNav, sidebarOpen, toggleSidebar }) {
           />
         </div>
       </div>
-
       {/* Toggle sidebar button */}
       <div
-        className={`absolute top-1/2 -translate-y-1/2 transition-all duration-300 z-30 ${
-          sidebarOpen ? 'left-72 -translate-x-1/2' : 'left-3'
-        } `}
+        className={` ${!sidebarOpen && "w-10"}  h-dvh  flex items-center `}
       >
         <button
           onClick={toggleSidebar}
-          className="bg-white hover:bg-red-400 text-red-500 rounded-full p-2"
+          className={`   bg-white  z-30  ${sidebarOpen ? "hover:-translate-x-2" : "hover:translate-x-2"} transition-all hover:bg-secondary hover:text-white text-secondary text rounded-full p-2 `}
         >
           <svg
             className={`w-6 transition-all h-6 ${
@@ -94,12 +91,14 @@ export default function Sidebar({ activeNav, sidebarOpen, toggleSidebar }) {
           </svg>
         </button>
       </div>
-    </>
+
+      
+    </div>
   );
 }
 
 // Navigation Item Component with onClick handler
-function NavItem({ icon, text, active, path }) {
+export function NavItem({ icon, text, active, path }) {
   const loc = useLocation(); 
 
   const locked = ['Commandes', 'Stock', 'Statestique', 'Finance', 'Historique'].includes(text);

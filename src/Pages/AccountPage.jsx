@@ -13,7 +13,7 @@ function AccountPage() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row h-full overflow-hidden">
+    <div className="flex  flex-col md:flex-row h-full overflow-hidden">
       <div className={`md:block md:flex-shrink-0 ${isSidebarOpen ? 'fixed inset-0 z-40 bg-gray-900 bg-opacity-50' : 'hidden'}`}>
         <div className="h-full md:sticky md:top-0">
           <LeftMenu
@@ -21,7 +21,7 @@ function AccountPage() {
             onMenuChange={handleLeftMenuChange}
             isOpen={isSidebarOpen}
             setIsOpen={setIsSidebarOpen}
-            className="w-64 h-full bg-white md:border-r border-gray-200"
+            className="w-60  h-full bg-white "
           />
         </div>
       </div>
@@ -47,7 +47,7 @@ function AccountPage() {
       </button>
 
       <div className="flex-1 overflow-auto">
-        <div className="p-4 md:p-6 bg-gray-50">
+        <div className="p-4 md:p-6 ">
           {activeLeftMenu === "employee" ? (
             <EmployeeManagement />
           ) : activeLeftMenu === "table" ? (

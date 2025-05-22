@@ -105,16 +105,16 @@ function MenuPage() {
   ]);
 
   return (
-    <div className="flex flex-col h-svh relative isolate">
+    <div className="flex flex-col  bg-red-400 h-full relative  ">
       {/* Category Slider remains unchanged */}
-      <div className="bg-white p-4 sticky top-0 z-[100] shadow-md isolate">
-        <div className="flex space-x-3 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4">
+      <div className="bg-white pt-3 py-2 px-4  top-0 z-[100]  ">
+        <div className="flex space-x-3 overflow-x-auto  scrollbar-hide -mx-4 px-4">
           {categories.map((category) => (
             <button
               key={category}
               className={`px-4 py-2 rounded-full whitespace-nowrap flex-shrink-0 ${
                 activeCategory === category
-                  ? "bg-red-500 text-white"
+                  ? "bg-secondary text-white"
                   : "bg-gray-200 text-gray-800 hover:bg-red-200"
               }`}
               onClick={() => setActiveCategory(category)}
@@ -125,11 +125,11 @@ function MenuPage() {
         </div>
       </div>
 
-      <div className="flex-1 bg-white overflow-y-auto px-2 sm:px-4 pt-4 pb-8 relative z-0">
+      <div className="flex-1 max-h-full bg-white overflow-y-auto   pt-4 pb-8 relative z-0">
         {showForm ? (
           <MenuItemForm onSave={handleSaveItem} item={editingItem} />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 pr-5 md:grid-cols-2 pr-5 lg:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-8 w-full max-w-[2000px] mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-2  lg:grid-cols-3 2xl:grid-cols-4 gap-6 w-full max-w-[2000px] mx-auto">
             <div onClick={handleAddNewItem} className="flex justify-center w-full p-4">
               <AddMenuCard />
             </div>

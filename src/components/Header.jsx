@@ -2,7 +2,7 @@ export default function Header({ user, activeNav }) {
   const showNotification = activeNav === 'Compte';
   
   return (
-    <header className="bg-white px-4 py-2 flex justify-between items-center shadow-sm">
+    <header className="bg-white px-3 pt-4 py-2 flex justify-between items-center">
       <div className="flex items-center space-x-2">
         <div className="bg-gray-800 rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
           <span className="text-white text-xs sm:text-sm">{user.name.charAt(0)}</span>

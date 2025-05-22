@@ -18,7 +18,7 @@ export default function LeftMenu({ activeItem, onMenuChange, isOpen, setIsOpen }
 
   const menuItems = [
     { id: 'table', name: 'Table management', icon: TableIcon },
-    { id: 'employee', name: 'Employee management', icon: EmployeeIcon },
+    { id: 'employee', name: 'Employee ', icon: EmployeeIcon },
     { id: 'type', name: 'Type et categorie', icon: TypeIcon },
     { id: 'suplement', name: 'Suplement', icon: SuplementIcon },
     { id: 'imprimantes', name: 'Imprimantes', icon: PrinterIcon },
@@ -31,10 +31,10 @@ export default function LeftMenu({ activeItem, onMenuChange, isOpen, setIsOpen }
       <div className={`
         fixed lg:static 
         inset-y-0 left-0 
-        transform ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+        transform 
         lg:translate-x-0 
-        transition-transform duration-300 ease-in-out
-        w-16 lg:w-64 bg-white flex flex-col gap-4 p-3 lg:p-6
+        
+        w-24 lg:w-56 bg-white py-5 flex flex-col gap-4 p-3
         z-50 shadow-lg lg:shadow-none
         h-screen overflow-y-auto
       `}>
@@ -56,7 +56,7 @@ export default function LeftMenu({ activeItem, onMenuChange, isOpen, setIsOpen }
             <span className="hidden lg:inline text-sm font-medium">{item.name}</span>
 
             {activeItem === item.id && (
-              <div className="absolute right-0 top-0 h-full w-1 bg-red-500 rounded-l"></div>
+              <div className="absolute right-0 top-0 h-full w-1 bg-secondary"></div>
             )}
           </div>
         ))}
